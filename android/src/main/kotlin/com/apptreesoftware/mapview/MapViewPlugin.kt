@@ -204,7 +204,10 @@ class MapViewPlugin(val activity: Activity) : MethodCallHandler {
                 if (GoogleApiAvailability.getInstance().showErrorDialogFragment(activity, code, REQUEST_GOOGLE_PLAY_SERVICES)) {
                     return
                 }
-                val mapOptions = call.argument<Map<String, Any>>("mapOptions")
+                var mapOptions = call.argument<Map<String, Any>>("mapOptions")
+                if (mapOptions == null) {
+                    mapOptions = HashMap<String, Any>()
+                }
                 val cameraDict = mapOptions["cameraPosition"] as Map<String, Any>
                 initialCameraPosition = getCameraPosition(cameraDict)
                 toolbarActions = getToolbarActions(call.argument<List<Map<String, Any>>>("actions"))
